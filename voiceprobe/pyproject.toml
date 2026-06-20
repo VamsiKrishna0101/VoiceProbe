@@ -1,0 +1,14 @@
+[project]
+name = "voiceprobe"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "arq",
+    "fastapi",
+    "httpx",
+    "psycopg[binary]>=3.2",
+    "python-dotenv",
+    "redis",
+    "twilio",
+    "uvicorn",
+]

@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: voiceprobe-postgres
+    environment:
+      POSTGRES_DB: voiceprobe
+      POSTGRES_USER: voiceprobe
+      POSTGRES_PASSWORD: voiceprobe
+    ports:
+      - "5433:5432"
+    volumes:
+      - voiceprobe_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U voiceprobe -d voiceprobe"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:8
+    container_name: voiceprobe-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - voiceprobe_redis_data:/data
+    command: ["redis-server", "--appendonly", "yes"]
+
+volumes:
+  voiceprobe_postgres_data:
+  voiceprobe_redis_data:

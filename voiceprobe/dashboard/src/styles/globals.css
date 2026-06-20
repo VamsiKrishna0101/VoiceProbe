@@ -1,0 +1,247 @@
+:root {
+    /* Surfaces — slightly tighter steps, less "floaty" separation */
+    --vp-bg: #0A0A0B;
+    --vp-surface: #111113;
+    --vp-surface-2: #16161A;
+    --vp-border: #1C1C1F;
+    --vp-border-hover: #2A2A2F;
+
+    /* Text — added a fourth step for true disabled state, separated from border tones */
+    --vp-text: #EDEDF0;
+    --vp-text-secondary: #A1A1AA;
+    --vp-text-muted: #6B6B76;
+    --vp-text-subtle: #4B4B54;
+    --vp-text-disabled: #34343A;
+
+    /* Accent — same hue, but a calmer dim for backgrounds */
+    --vp-accent: #4F6EF7;
+    --vp-accent-hover: #6481F8;
+    --vp-accent-dim: #182040;
+
+    /* Status colors — desaturated slightly so they read as "calm system status"
+       rather than alert/consumer red-green. Dim variants pulled darker/flatter
+       so badges don't compete with data. */
+    --vp-success: #3FB155;
+    --vp-success-dim: #0E1F13;
+    --vp-danger: #D6494E;
+    --vp-danger-dim: #2A1314;
+    --vp-warning: #D6A052;
+    --vp-warning-dim: #271D0E;
+
+    --vp-font: 'Inter', -apple-system, sans-serif;
+    --vp-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+    /* Radius — one small step added for tags/checkboxes/inputs; large radius
+       pulled in slightly so panels read less "soft consumer app" */
+    --vp-radius-sm: 4px;
+    --vp-radius: 6px;
+    --vp-radius-lg: 8px;
+
+    /* Spacing scale — gives every component a shared rhythm instead of
+       one-off px values scattered across files */
+    --vp-space-1: 4px;
+    --vp-space-2: 8px;
+    --vp-space-3: 12px;
+    --vp-space-4: 16px;
+    --vp-space-5: 24px;
+    --vp-space-6: 32px;
+
+    /* Elevation — subtle, single-direction shadows rather than soft glows.
+       Enterprise UI tends to use shadow for hierarchy, not decoration. */
+    --vp-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --vp-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.5);
+    --vp-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.6);
+
+    /* Focus ring — required for accessibility-conscious enterprise products */
+    --vp-focus-ring: 0 0 0 1px var(--vp-bg), 0 0 0 3px var(--vp-accent);
+
+    /* Type scale — small, deliberate steps. Labels/eyebrows sit a notch
+       smaller and tighter so hero numbers actually stand out. */
+    --vp-text-xs: 11px;
+    --vp-text-sm: 12px;
+    --vp-text-base: 13px;
+    --vp-text-md: 14px;
+    --vp-text-lg: 18px;
+    --vp-text-xl: 24px;
+    --vp-text-2xl: 32px;
+
+    --vp-tracking-label: 0.04em;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    background: var(--vp-bg);
+    color: var(--vp-text);
+    font-family: var(--vp-font);
+    font-size: var(--vp-text-base);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Shared eyebrow/label treatment — uppercase, muted, tightly tracked.
+   This is the single biggest lever for "enterprise" type hierarchy:
+   labels recede, data leads. */
+.vp-label,
+.eyebrow,
+[data-label] {
+    font-size: var(--vp-text-xs);
+    font-weight: 600;
+    letter-spacing: var(--vp-tracking-label);
+    text-transform: uppercase;
+    color: var(--vp-text-muted);
+}
+
+/* Hero/metric numbers — tabular figures so columns of numbers align,
+   tighter negative tracking at large sizes to avoid looking "loose" */
+.vp-metric,
+.stat-value {
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--vp-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--vp-border-hover);
+    border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--vp-text-subtle);
+}
+
+a {
+    color: var(--vp-accent);
+    text-decoration: none;
+    transition: color 0.12s ease;
+}
+
+a:hover {
+    color: var(--vp-accent-hover);
+}
+
+/* Visible keyboard focus — quiet by default, clear on :focus-visible.
+   Enterprise/accessibility-conscious products need this; omitting it
+   is one of the fastest "this feels unfinished" tells. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+    outline: none;
+    box-shadow: var(--vp-focus-ring);
+    border-radius: var(--vp-radius-sm);
+}
+
+button {
+    font-family: inherit;
+    color: inherit;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+::selection {
+    background: var(--vp-accent-dim);
+    color: var(--vp-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* --- PREMIUM AI AESTHETICS --- */
+
+body {
+    background-color: var(--vp-bg);
+    /* Subtle dot grid pattern */
+    background-image: radial-gradient(var(--vp-border) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: 0 0;
+}
+
+/* Glowing Orbs */
+.vp-glow-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.15;
+}
+
+/* Glassmorphism Panels */
+.vp-glass {
+    background: rgba(17, 17, 19, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 0.5px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Primary Button Glow */
+.vp-btn-primary {
+    background: linear-gradient(135deg, var(--vp-accent), #7C98F9);
+    box-shadow: 0 0 16px rgba(79, 110, 247, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: all 0.2s ease;
+}
+
+.vp-btn-primary:hover {
+    box-shadow: 0 0 24px rgba(79, 110, 247, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+/* Animations */
+@keyframes vp-fade-in-up {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+    animation: vp-fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+
+@keyframes vp-pulse-dot {
+    0% { box-shadow: 0 0 0 0 rgba(63, 177, 85, 0.4); }
+    70% { box-shadow: 0 0 0 6px rgba(63, 177, 85, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(63, 177, 85, 0); }
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--vp-success);
+    animation: vp-pulse-dot 2s infinite;
+}

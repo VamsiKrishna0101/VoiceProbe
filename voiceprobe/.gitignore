@@ -1,0 +1,57 @@
+# VoiceProbe Specific
+recordings/
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+.venv
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Node / React Dashboard
+node_modules/
+dashboard/node_modules/
+dashboard/dist/
+dashboard/build/
+dashboard/.env
+dashboard/.env.local
+dashboard/.env.*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDEs and OS
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Logs and Databases
+*.log
+*.sqlite3
+voiceprobe.db
