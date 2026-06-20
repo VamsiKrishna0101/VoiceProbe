@@ -466,6 +466,127 @@ Every test run produces a structured JSON report:
 
 ---
 
+## Getting your API keys
+
+### 1. Twilio (phone calls)
+1. Sign up at [twilio.com](https://twilio.com) — you get $15 free trial credit
+2. From the Twilio Console dashboard, copy:
+   - **Account SID** → `TWILIO_ACCOUNT_SID`
+   - **Auth Token** → `TWILIO_AUTH_TOKEN`
+3. Go to **Phone Numbers → Manage → Buy a number** → get a number with Voice capability
+   - Copy it → `TWILIO_PHONE_NUMBER`
+4. Go to **Phone Numbers → Verified Caller IDs** → verify your own phone number (required for trial accounts)
+
+---
+
+### 2. OpenAI (real-time voice conversation)
+1. Sign up at [platform.openai.com](https://platform.openai.com)
+2. Go to **API Keys** → Create new secret key
+   - Copy it → `OPENAI_API_KEY`
+3. Make sure your account has **Realtime API** access (gpt-4o-realtime-preview)
+   - Check at platform.openai.com/settings/limits
+
+---
+
+### 3. Amazon Bedrock via Mantle (LLM judge + persona generation)
+VoiceProbe uses Kimi K2 via Amazon Bedrock for evaluation and persona generation.
+
+1. Sign up at [aws.amazon.com](https://aws.amazon.com)
+2. Go to **Amazon Bedrock → Model access** → request access to:
+   - `moonshotai.kimi-k2.5`
+3. Go to **Bedrock → Mantle API** → create an API key
+   - Copy it → `AWS_BEARER_TOKEN_BEDROCK`
+
+> **Alternative:** If you don't have Bedrock access, swap `core/llm.py` to use OpenAI directly:
+> ```python
+> from openai import AsyncOpenAI
+> client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+> ```
+
+---
+
+### 4. ngrok (local development tunnel)
+Twilio needs a public URL to send audio to your local server.
+
+1. Sign up at [ngrok.com](https://ngrok.com) — free tier is enough
+2. Install ngrok:
+```bash
+# Mac
+brew install ngrok
+
+# Windows
+choco install ngrok
+
+# Or download directly from ngrok.com/download
+```
+3. Authenticate:
+```bash
+ngrok config add-authtoken YOUR_NGROK_TOKEN
+```
+4. When running locally, start ngrok before making calls:
+```bash
+ngrok http 8000
+```
+Copy the `wss://` URL — this goes into your call config as the WebSocket URL.
+
+---
+
+### 5. Redis (job queue)
+```bash
+# Mac
+brew install redis
+brew services start redis
+
+# Ubuntu/Debian
+sudo apt install redis-server
+sudo systemctl start redis
+
+# Windows
+# Download from redis.io/download or use Docker:
+docker run -d -p 6379:6379 redis
+```
+
+---
+
+### Complete `.env` file
+
+Once you have all keys, your `.env` should look like this:
+
+```env
+# Twilio
+TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+TWILIO_AUTH_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+TWILIO_PHONE_NUMBER=+15550000000
+MY_PHONE_NUMBER=+15550000001
+
+# OpenAI
+OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# Amazon Bedrock (Mantle)
+AWS_BEARER_TOKEN_BEDROCK=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# Redis
+REDIS_URL=redis://localhost:6379
+
+# VoiceProbe defaults
+DEFAULT_SYSTEM_PROMPT=You are a customer calling support. Keep responses short. Speak naturally.
+NGROK_URL=wss://your-ngrok-url.ngrok-free.app
+```
+
+---
+
+### Cost estimate for development
+
+| Service | Usage | Estimated cost |
+|---|---|---|
+| Twilio | ~100 test calls × 2 min | ~$2.60 (covered by $15 trial) |
+| OpenAI Realtime | ~200 min of audio | ~$10-15 |
+| Amazon Bedrock | ~500 LLM calls | ~$1-3 |
+| ngrok | Local tunnel | Free tier |
+| Redis | Local | Free |
+
+**Total for full development and demo: ~$15-20**
+
 ## Built with
 
 - [LangGraph](https://github.com/langchain-ai/langgraph) — agent orchestration
